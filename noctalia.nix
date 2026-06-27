@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   home-manager.users.drfoobar = {
+    home.stateVersion = "25.05";
     imports = [
       inputs.noctalia.homeModules.default
     ];
