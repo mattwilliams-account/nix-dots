@@ -15,20 +15,23 @@ FLAKE_TARGET="nixy"
 # ────────────────────────────────────────────────
 # Helpers
 # ────────────────────────────────────────────────
-info()  { echo -e "\e[1;34m[INFO]\e[0m  $*"; }
-ok()    { echo -e "\e[1;32m[OK]\e[0m    $*"; }
-warn()  { echo -e "\e[1;33m[WARN]\e[0m  $*"; }
-die()   { echo -e "\e[1;31m[ERROR]\e[0m $*" >&2; exit 1; }
+info() { echo -e "\e[1;34m[INFO]\e[0m  $*"; }
+ok() { echo -e "\e[1;32m[OK]\e[0m    $*"; }
+warn() { echo -e "\e[1;33m[WARN]\e[0m  $*"; }
+die() {
+  echo -e "\e[1;31m[ERROR]\e[0m $*" >&2
+  exit 1
+}
 
 # ────────────────────────────────────────────────
 # Pre-flight checks
 # ────────────────────────────────────────────────
 info "Running pre-flight checks..."
 
-[[ -f /etc/nixos/hardware-configuration.nix ]] || \
+[[ -f /etc/nixos/hardware-configuration.nix ]] ||
   die "/etc/nixos/hardware-configuration.nix not found. Run 'sudo nixos-generate-config' first."
 
-command -v git >/dev/null 2>&1 || \
+command -v git >/dev/null 2>&1 ||
   die "git is not available. Run: nix-shell -p git"
 
 if [[ $EUID -eq 0 ]]; then
@@ -61,7 +64,7 @@ ok "Repo ready at $DOTS_DIR."
 # ────────────────────────────────────────────────
 info "Copying hardware-configuration.nix into dotfiles directory..."
 
-[[ -f "$DOTS_DIR/hardware-configuration.nix" ]] && \
+[[ -f "$DOTS_DIR/hardware-configuration.nix" ]] &&
   warn "Overwriting existing hardware-configuration.nix in $DOTS_DIR."
 
 cp /etc/nixos/hardware-configuration.nix "$DOTS_DIR/hardware-configuration.nix"
@@ -72,7 +75,7 @@ ok "hardware-configuration.nix copied."
 # ────────────────────────────────────────────────
 # configuration.nix expects the theme at: /home/loki/nixos-dots/sddm/pixel-rainyroom
 # This path is outside the cloned repo — warn if missing so SDDM doesn't silently fail.
-SDDM_THEME_PATH="/home/loki/nixos-dots/sddm/pixel-rainyroom"
+SDDM_THEME_PATH="$DOTS_DIR/sddm/pixel-rainyroom"
 if [[ ! -d "$SDDM_THEME_PATH" ]]; then
   warn "SDDM theme not found at $SDDM_THEME_PATH"
   warn "SDDM may fail to start. Place the theme there manually, or update"

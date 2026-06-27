@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  dotfiles = "${config.home.homeDirectory}/nixos-dotfiles/.config";
+  dotfiles = "${config.home.homeDirectory}/nix-dotfiles/.config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
   configs = {
@@ -13,7 +13,7 @@ in
  # imports = [
  #   ./modules/theme.nix
  # ];
-  home.file.".vimrc".source = create_symlink "${config.home.homeDirectory}/nixos-dotfiles/.vimrc";
+  home.file.".vimrc".source = create_symlink "${config.home.homeDirectory}/nix-dotfiles/.vimrc";
   home.username = "loki";
   home.homeDirectory = "/home/loki";
   home.stateVersion = "25.05";
@@ -28,7 +28,7 @@ in
 programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#nixy";
+      nrs = "sudo nixos-rebuild switch --flake ~/nix-dotfiles#nixy";
       vim = "nvim";
     };
     initExtra = ''
