@@ -6,6 +6,11 @@
       ./hardware-configuration.nix
     ];
 
+  boot.loader.grub = {
+      enable = true;
+      device = "/dev/vda"
+      useOSProber = true;
+    };
 
   networking.hostName = "nixy";
   networking.networkmanager.enable = true;
