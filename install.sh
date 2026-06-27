@@ -86,10 +86,10 @@ fi
 # Run nixos-rebuild
 # ────────────────────────────────────────────────
 info "Running nixos-rebuild switch..."
-info "  Flake: $DOTS_DIR#$FLAKE_TARGET"
+info "  Flake: $DOTS_DIR#nixy"
 echo ""
 
-sudo nixos-rebuild switch --flake "$DOTS_DIR#$FLAKE_TARGET"
+sudo nixos-rebuild switch --flake "$DOTS_DIR#nixy"
 
 echo ""
 ok "nixos-rebuild completed successfully!"
